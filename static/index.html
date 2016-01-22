@@ -18,17 +18,11 @@
 	   $data = $("#question").val();
 	   if ($data.length == 0)
 		 return;
-	   $.ajax(
-		 {
-		   url: "/answer",
-		   dataType: "text",
-		   type: "post",
-		   data: {q: $data},
-		   success: function(data){
-			 $("#results").append("<li>" + data + "</li>")
-		   }
-		 }
-	   )
+	   $.post("/answer",{
+		 q: $data
+	   },function(data) {
+		 $("#results").append("<li>" + data + "</li>")
+	   })
 	 })
 	</script>
   </body>
