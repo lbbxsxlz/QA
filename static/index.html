@@ -14,6 +14,7 @@
 		<input type="text" id="question" placeholder="输入你的问句" />
 		<input type="button" id="split" value="分词" />
 		<input type="button" id="keyword" value="关键词" />
+		<input type="button" id="pos" value="词性标注" />
 		<ul id="results"></ul>
 	  </form>
 	</div>
@@ -33,6 +34,16 @@
 	   if ($data.length == 0)
 		 return;
 	   $.post("/keyword",{
+		 q: $data
+	   },function(data) {
+		 $("#results").append("<li>" + data + "</li>")
+	   })
+	 });
+	 $("#pos").bind("click",function(){
+	   $data = $("#question").val();
+	   if ($data.length == 0)
+		 return;
+	   $.post("/pos",{
 		 q: $data
 	   },function(data) {
 		 $("#results").append("<li>" + data + "</li>")
