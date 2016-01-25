@@ -27,12 +27,11 @@ def wordsplit():
 def keyword():
     question = request.form['q'].encode('utf8')
     method = request.form['m'].encode('utf8')
-    logging.debug("method: " + method)
     if (method == "tfidf"):
         tags = jieba.analyse.extract_tags(question, withWeight=True)
     else:
         tags = jieba.analyse.textrank(question, withWeight=True)
-    result = "<b>问句</b> " + question + "<br/><b>关键字:</b>"
+    result = "<b>问句</b> " + question + "<br/><b>关键字(" + method + "):</b>"
     for tag in tags:
         result += "{}({}), ".format(tag[0].encode('utf8'),
                                     tag[1])
@@ -51,5 +50,5 @@ def pos():
 
 if __name__ == "__main__":
     app.debug = True
-    logging.basicConfig(filename="app.log", level=logging.DEBUG)
+    logging.basicConfig(filename="app.log", level=logging.INFO)
     app.run(host='0.0.0.0', port=8080)
