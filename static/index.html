@@ -16,12 +16,18 @@
 		<input type="button" id="keyword" value="关键词" />
 		<input type="button" id="pos" value="词性标注" />
 		<input type="button" id="clear" value="清空" />
+		</br>
+		关键字方法：
+		<label for="tfidf">tfidf</label>
+		<input type="radio" id="tfidf" name="keyword" checked="checked"/>
+		<label for="textrank">textrank</label>
+		<input type="radio" id="textrank" name="keyword"/>
 		<ul id="results"></ul>
 	  </form>
 	</div>
 	<script>
 	 $("#split").bind("click",function(){
-	   $data = $("#question").val();
+	   var $data = $("#question").val();
 	   if ($data.length == 0)
 		 return;
 	   $.post("/wordsplit",{
@@ -31,17 +37,27 @@
 	   });
 	 });
 	 $("#keyword").bind("click",function(){
-	   $data = $("#question").val();
+	   var $data = $("#question").val();
+	   var method;
+
 	   if ($data.length == 0)
 		 return;
+
+	   if ($("#tfidf").is(":checked")) {
+		 method = "tfidf";
+	   }else {
+		 method = "textrank";
+	   }
+
 	   $.post("/keyword",{
-		 q: $data
+		 q: $data,
+		 m: method
 	   },function(data) {
 		 $("#results").append("<li>" + data + "</li>");
 	   });
 	 });
 	 $("#pos").bind("click",function(){
-	   $data = $("#question").val();
+	   var $data = $("#question").val();
 	   if ($data.length == 0)
 		 return;
 	   $.post("/pos",{
