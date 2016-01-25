@@ -15,6 +15,7 @@
 		<input type="button" id="split" value="分词" />
 		<input type="button" id="keyword" value="关键词" />
 		<input type="button" id="pos" value="词性标注" />
+		<input type="button" id="clear" value="清空" />
 		<ul id="results"></ul>
 	  </form>
 	</div>
@@ -26,8 +27,8 @@
 	   $.post("/wordsplit",{
 		 q: $data
 	   },function(data) {
-		 $("#results").append("<li>" + data + "</li>")
-	   })
+		 $("#results").append("<li>" + data + "</li>");
+	   });
 	 });
 	 $("#keyword").bind("click",function(){
 	   $data = $("#question").val();
@@ -36,8 +37,8 @@
 	   $.post("/keyword",{
 		 q: $data
 	   },function(data) {
-		 $("#results").append("<li>" + data + "</li>")
-	   })
+		 $("#results").append("<li>" + data + "</li>");
+	   });
 	 });
 	 $("#pos").bind("click",function(){
 	   $data = $("#question").val();
@@ -46,8 +47,11 @@
 	   $.post("/pos",{
 		 q: $data
 	   },function(data) {
-		 $("#results").append("<li>" + data + "</li>")
-	   })
+		 $("#results").append("<li>" + data + "</li>");
+	   });
+	 });
+	 $("#clear").bind("click",function(){
+	   $("#results").empty();
 	 })
 	</script>
   </body>
