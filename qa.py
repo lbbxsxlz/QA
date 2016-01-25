@@ -22,9 +22,12 @@ def wordsplit():
 @app.route('/keyword', methods=['POST'])
 def keyword():
     question = request.form['q'].encode('utf8')
-    tags = jieba.analyse.extract_tags(question)
-    result = ','.join(tags).encode('utf8')
-    return "<b>问句</b> " + question + "<br/><b>关键字:</b> " + result
+    tags = jieba.analyse.extract_tags(question, withWeight=True)
+    result = "<b>问句</b> " + question + "<br/><b>关键字:</b>"
+    for tag in tags:
+        result += "{}({}), ".format(tag[0].encode('utf8'),
+                                    tag[1])
+    return result
 
 if __name__ == "__main__":
     app.debug = True
